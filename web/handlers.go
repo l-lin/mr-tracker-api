@@ -25,7 +25,7 @@ func SignOut() negroni.HandlerFunc {
 
 		// Set token to null to avoid redirection loop
 		oauth2.SetToken(r, nil)
-		http.Redirect(rw, r, oauth2.PathLogout + "?next=/authTest", http.StatusFound)
+		http.Redirect(rw, r, oauth2.PathLogout, http.StatusFound)
 	}
 }
 

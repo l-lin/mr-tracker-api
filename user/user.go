@@ -17,14 +17,15 @@ const oauth2RefreshEndPoint  = "https://www.googleapis.com/oauth2/v3/token"
 
 // The feed
 type User struct {
-	UserId       	string `json:"-"`
-	RefreshToken 	string `json:"-"`
-	Email		 	string `json:"-"`
+	UserId       	string    `json:"-"`
+	RefreshToken 	string    `json:"-"`
+	Email		 	string 	  `json:"-"`
 	LastConnection 	time.Time `json:"-"`
+	Picture			string    `json:"picture"`
 }
 
-func (t User) String() string {
-	return fmt.Sprintf("UserId = %s, RefreshToken = %s, Emaio = %s", t.UserId, t.RefreshToken)
+func (user User) String() string {
+	return fmt.Sprintf("UserId = %s, RefreshToken = %s, Email = %s, LastConnection = %v, Picture = %s", user.UserId, user.RefreshToken, user.Email, user.LastConnection, user.Picture)
 }
 
 type ResfreshTokenConfig struct {
@@ -50,7 +51,7 @@ func Exists(userId string) bool {
 	database := db.Connect()
 	defer database.Close()
 
-	row := database.QueryRow("SELECT CASE WHEN EXISTS(SELECT 1 FROM tokens WHERE user_id = $1) THEN 1 ELSE 0 END", userId)
+	row := database.QueryRow("SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE user_id = $1) THEN 1 ELSE 0 END", userId)
 	var exists int64
 	if err := row.Scan(&exists); err != nil {
 		log.Printf("[x] Could not check if there is existing user for user '%s'. Reason: %s", userId, err.Error())
@@ -63,28 +64,19 @@ func Get(userId string) *User {
 	database := db.Connect()
 	defer database.Close()
 
-	row := database.QueryRow("SELECT user_id, refresh_token, email, last_connection FROM tokens WHERE user_id = $1", userId)
+	row := database.QueryRow("SELECT user_id, refresh_token, email, last_connection, picture FROM users WHERE user_id = $1", userId)
 	return toUser(row)
 }
 
-// Get the Novel given an novelId
-func GetByAccessToken(accessToken string) *User {
-	database := db.Connect()
-	defer database.Close()
-
-	row := database.QueryRow("SELECT user_id, refresh_token, email, last_connection FROM tokens WHERE access_token = $1", accessToken)
-	return toUser(row)
-}
-
-// Save the token in the database
-func (user *User) Save() {
+// Save the user in the database
+func (u *User) Save() {
 	database := db.Connect()
 	defer database.Close()
 	tx, err := database.Begin()
 	if err != nil {
 		log.Printf("[x] Could not start the transaction. Reason: %s", err.Error())
 	}
-	_, err = tx.Exec("INSERT INTO users (user_id, refresh_token, email, last_connection) VALUES ($1, $2, $3, $4)", user.UserId, user.RefreshToken, user.Email, user.LastConnection)
+	_, err = tx.Exec("INSERT INTO users (user_id, refresh_token, email, last_connection, picture) VALUES ($1, $2, $3, $4, $5)", u.UserId, u.RefreshToken, u.Email, u.LastConnection, u.Picture)
 	if err != nil {
 		tx.Rollback()
 		log.Printf("[x] Could not save the user. Reason: %s", err.Error())
@@ -95,14 +87,14 @@ func (user *User) Save() {
 }
 
 // Update the user
-func (user *User) Update() {
+func (u *User) Update() {
 	database := db.Connect()
 	defer database.Close()
 	tx, err := database.Begin()
 	if err != nil {
 		log.Printf("[x] Could not start the transaction. Reason: %s", err.Error())
 	}
-	_, err = tx.Exec("UPDATE users SET refresh_token = $1, email = $2, last_connection = $3 WHERE user_id = $4", user.RefreshToken, user.UserId, user.Email, user.LastConnection)
+	_, err = tx.Exec("UPDATE users SET refresh_token = $1, email = $2, last_connection = $3, picture = $4 WHERE user_id = $5", u.RefreshToken, u.Email, u.LastConnection, u.Picture, u.UserId)
 	if err != nil {
 		tx.Rollback()
 		log.Printf("[x] Could not update the user. Reason: %s", err.Error())
@@ -114,8 +106,8 @@ func (user *User) Update() {
 }
 
 // Refresh the given user
-func (user *User) Refresh() bool {
-	c := &ResfreshTokenConfig{os.Getenv("GOOGLE_CLIENT_ID"), os.Getenv("GOOGLE_CLIENT_SECRET"), "refresh_token", user.RefreshToken}
+func (u *User) Refresh() bool {
+	c := &ResfreshTokenConfig{os.Getenv("GOOGLE_CLIENT_ID"), os.Getenv("GOOGLE_CLIENT_SECRET"), "refresh_token", u.RefreshToken}
 	buf, _ := json.Marshal(c)
 	body := bytes.NewBuffer(buf)
 	r, err := http.Post(oauth2RefreshEndPoint, "application/json", body)
@@ -145,6 +137,7 @@ func toUser(rows db.RowMapper) *User {
 		&user.RefreshToken,
 		&user.Email,
 		&user.LastConnection,
+		&user.Picture,
 	)
 	if err != nil {
 		log.Printf("[-] Could not scan the user. Reason: %s", err.Error())

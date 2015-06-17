@@ -1,15 +1,6 @@
 package web
 
-import (
-	"github.com/gorilla/mux"
-	"github.com/l-lin/mr-tracker-api/user"
-	oauth2 "github.com/goincremental/negroni-oauth2"
-	sessions "github.com/goincremental/negroni-sessions"
-	"net/http"
-	"log"
-	"encoding/json"
-	"fmt"
-)
+import "github.com/gorilla/mux"
 
 // Returns the routers for novels, feeds and notifications
 func NewRouter() *mux.Router {
@@ -21,7 +12,7 @@ func NewRouter() *mux.Router {
 		Methods(route.Method).
 		Path(route.Pattern).
 		Name(route.Name).
-		Handler(wrapWithCheckAuth(route.HandlerFunc))
+		Handler(WrapWithCheckAuth(route.HandlerFunc))
 	}
 
 	return router
@@ -43,29 +34,4 @@ func NewSignInRouter() *mux.Router {
 	Handler(route.HandlerFunc)
 
 	return router
-}
-
-// Wrap the HandlerFunc by checking if the user is indeed authenticated
-func wrapWithCheckAuth(handlerFunc http.HandlerFunc) http.HandlerFunc {
-	return func (w http.ResponseWriter, r *http.Request) {
-		oauthT := oauth2.GetToken(r)
-		if oauthT == nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			if err := json.NewEncoder(w).Encode(JsonErr{Code: http.StatusUnauthorized, Text: "You are not authenticated!"}); err != nil {
-				log.Fatalf("[x] Error when encoding the json. Reason: %s", err.Error())
-			}
-		} else {
-			if !oauthT.Valid() {
-				s := sessions.GetSession(r)
-				userId := s.Get(SESSION_USER_ID)
-				user := user.Get(fmt.Sprintf("%v", userId))
-				log.Printf("[-] Refreshing the token %s", user.RefreshToken)
-				if user.Refresh() {
-					handlerFunc.ServeHTTP(w, r)
-				}
-			} else {
-				handlerFunc.ServeHTTP(w, r)
-			}
-		}
-	}
 }

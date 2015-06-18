@@ -21,9 +21,9 @@ const (
 
 // The user info for Google account
 type UserInfo struct {
-	Id 		string `json:"id"`
-	Email 	string `json:"email"`
-	Picture string `json:"picture"`
+	Id 		string
+	Email 	string
+	Picture string
 }
 
 // Returns a new Negroni middleware using Google OAuth2
@@ -44,32 +44,51 @@ func WrapWithCheckAuth(handlerFunc http.HandlerFunc) http.HandlerFunc {
 			reject(w)
 		} else {
 			if !oauthT.Valid() {
-				s := sessions.GetSession(r)
-				userId := s.Get(SESSION_USER_ID)
+				log.Printf("[-] The oauthToken is not valid")
+				userId := getUserId(r, saveOrUpdateUser)
 
-				// If userId not found, then fetch the info from Google
-				if userId == nil {
-					userInfo, oauthT, err := GetUserInfo(r)
-					if err == nil {
-						userId = userInfo.Id
-						saveOrUpdateUser(userInfo, oauthT)
-					}
-				}
-
-				user := user.Get(fmt.Sprintf("%v", userId))
-				if user != nil {
-					log.Printf("[-] Refreshing the token %s", user.RefreshToken)
-					if user.Refresh() {
+				u := user.Get(fmt.Sprintf("%v", userId))
+				if u != nil {
+					log.Printf("[-] Refreshing the token %s", u.RefreshToken)
+					if u.Refresh() {
 						handlerFunc.ServeHTTP(w, r)
 					}
 				}
 			} else {
+				log.Printf("[-] The oauthToken is valid")
+				userId := getUserId(r, nil)
+				u := user.Get(fmt.Sprintf("%v", userId))
+				u.LastConnection = time.Now()
+				u.Update()
+
 				handlerFunc.ServeHTTP(w, r)
 			}
 		}
 	}
 }
 
+// Get the user id.
+// First fetch it from the session
+// If not present, then fetch it from Google service
+func getUserId(r *http.Request, callback func (UserInfo, oauth2.Tokens)) string {
+	s := sessions.GetSession(r)
+	userId := s.Get(SESSION_USER_ID)
+	// If userId not found, then fetch the info from Google
+	if userId == nil {
+		userInfo, oauthT, err := getUserInfo(r)
+		if err == nil {
+			userId = userInfo.Id
+			s.Set(SESSION_USER_ID, userId)
+			if callback != nil {
+				// Save or updating with fresh data of the user
+				callback(userInfo, oauthT)
+			}
+		}
+	}
+	return fmt.Sprintf("%v", userId)
+}
+
+// Reject the request by sending a HTTP 401
 func reject(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusUnauthorized)
 	if err := json.NewEncoder(w).Encode(JsonErr{Code: http.StatusUnauthorized, Text: "You are not authenticated!"}); err != nil {
@@ -77,6 +96,7 @@ func reject(w http.ResponseWriter) {
 	}
 }
 
+// Save or update the given user info
 func saveOrUpdateUser(userInfo UserInfo, oauthT oauth2.Tokens) {
 	if !user.Exists(userInfo.Id) {
 		u := user.New()
@@ -93,7 +113,7 @@ func saveOrUpdateUser(userInfo UserInfo, oauthT oauth2.Tokens) {
 		u.Picture = userInfo.Picture
 		u.LastConnection = time.Now()
 		if oauthT.Refresh() != "" {
-			// If the refresh is not empty => the user had revoked the permissions => we have to update the token
+			log.Printf("[-] The refresh token is not empty => the user had revoked the permissions")
 			u.RefreshToken = oauthT.Refresh()
 		}
 		log.Printf("[-] Updating the user %v", u)
@@ -103,7 +123,7 @@ func saveOrUpdateUser(userInfo UserInfo, oauthT oauth2.Tokens) {
 
 // Get the user ID from a given token.
 // It will make a GET request to https://www.googleapis.com/oauth2/v1/userinfo?access_token=...
-func GetUserInfo(r *http.Request) (UserInfo, oauth2.Tokens, error) {
+func getUserInfo(r *http.Request) (UserInfo, oauth2.Tokens, error) {
 	var userInfo UserInfo
 	oauthT := oauth2.GetToken(r)
 	if oauthT == nil || !oauthT.Valid() {

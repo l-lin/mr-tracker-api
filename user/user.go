@@ -41,7 +41,7 @@ type RefreshTokenResponse struct {
 	TokenType   string 	`json:"token_type"`
 }
 
-// Instanciate a new feed
+// Instanciate a new user
 func New() *User {
 	return &User{}
 }
@@ -66,6 +66,26 @@ func Get(userId string) *User {
 
 	row := database.QueryRow("SELECT user_id, refresh_token, email, last_connection, picture FROM users WHERE user_id = $1", userId)
 	return toUser(row)
+}
+
+// Fetch the list of users
+func GetList() []*User {
+	users := make([]*User, 0)
+	database := db.Connect()
+	defer database.Close()
+
+	rows, err := database.Query("SELECT user_id, refresh_token, email, last_connection, picture FROM users")
+	if err != nil {
+		log.Printf("[x] Error when getting the list of users. Reason: %s", err.Error())
+		return users
+	}
+	for rows.Next() {
+		users = append(users, toUser(rows))
+	}
+	if err := rows.Err(); err != nil {
+		log.Printf("[x] Error when getting the list of users. Reason: %s", err.Error())
+	}
+	return users
 }
 
 // Save the user in the database

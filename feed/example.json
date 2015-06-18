@@ -1,0 +1,354 @@
+[
+    {
+        "completed": false,
+        "title": "Dagashi Kashi",
+        "slug": "dagashi-kashi",
+        "url": "http://www.mangareader.net/dagashi-kashi",
+        "image_url": "http://s1.mangareader.net/cover/dagashi-kashi/dagashi-kashi-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Dagashi Kashi 13",
+                "url": "http://www.mangareader.net/dagashi-kashi/13"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Seifuku Aventure - Chemical Reaction Of High School Students",
+        "slug": "seifuku-aventure-chemical-reaction-of-high-school-students",
+        "url": "http://www.mangareader.net/seifuku-aventure-chemical-reaction-of-high-school-students",
+        "image_url": "http://s1.mangareader.net/cover/seifuku-aventure-chemical-reaction-of-high-school-students/seifuku-aventure-chemical-reaction-of-high-school-students-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Seifuku Aventure - Chemical Reaction Of High School Students 13",
+                "url": "http://www.mangareader.net/seifuku-aventure-chemical-reaction-of-high-school-students/13"
+            },
+            {
+                "title": "Seifuku Aventure - Chemical Reaction Of High School Students 12",
+                "url": "http://www.mangareader.net/seifuku-aventure-chemical-reaction-of-high-school-students/12"
+            },
+            {
+                "title": "Seifuku Aventure - Chemical Reaction Of High School Students 11",
+                "url": "http://www.mangareader.net/seifuku-aventure-chemical-reaction-of-high-school-students/11"
+            },
+            {
+                "title": "Seifuku Aventure - Chemical Reaction Of High School Students 10",
+                "url": "http://www.mangareader.net/seifuku-aventure-chemical-reaction-of-high-school-students/10"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Hayachine!",
+        "slug": "hayachine",
+        "url": "http://www.mangareader.net/hayachine",
+        "image_url": "http://s1.mangareader.net/cover/hayachine/hayachine-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Hayachine! 9",
+                "url": "http://www.mangareader.net/hayachine/9"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Ashita no Kyouko-san",
+        "slug": "ashita-no-kyouko-san",
+        "url": "http://www.mangareader.net/ashita-no-kyouko-san",
+        "image_url": "http://s1.mangareader.net/cover/ashita-no-kyouko-san/ashita-no-kyouko-san-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Ashita no Kyouko-san 14",
+                "url": "http://www.mangareader.net/ashita-no-kyouko-san/14"
+            },
+            {
+                "title": "Ashita no Kyouko-san 13",
+                "url": "http://www.mangareader.net/ashita-no-kyouko-san/13"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "God Seeker",
+        "slug": "god-seeker",
+        "url": "http://www.mangareader.net/1525/god-seeker.html",
+        "image_url": "http://s1.mangareader.net/cover/god-seeker/god-seeker-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "God Seeker 9",
+                "url": "http://www.mangareader.net/god-seeker/9"
+            },
+            {
+                "title": "God Seeker 8",
+                "url": "http://www.mangareader.net/god-seeker/8"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": true,
+        "title": "Osu!! Karatebu",
+        "slug": "osu-karatebu",
+        "url": "http://www.mangareader.net/osu-karatebu",
+        "image_url": "http://s1.mangareader.net/cover/osu-karatebu/osu-karatebu-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Osu!! Karatebu 122",
+                "url": "http://www.mangareader.net/osu-karatebu/122"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "The Red Book",
+        "slug": "the-red-book",
+        "url": "http://www.mangareader.net/the-red-book",
+        "image_url": "http://s1.mangareader.net/cover/the-red-book/the-red-book-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "The Red Book 12",
+                "url": "http://www.mangareader.net/the-red-book/12"
+            },
+            {
+                "title": "The Red Book 11",
+                "url": "http://www.mangareader.net/the-red-book/11"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "The God of High School",
+        "slug": "the-god-of-high-school",
+        "url": "http://www.mangareader.net/the-god-of-high-school",
+        "image_url": "http://s1.mangareader.net/cover/the-god-of-high-school/the-god-of-high-school-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "The God of High School 214",
+                "url": "http://www.mangareader.net/the-god-of-high-school/214"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Dead Days",
+        "slug": "dead-days",
+        "url": "http://www.mangareader.net/dead-days",
+        "image_url": "http://s1.mangareader.net/cover/dead-days/dead-days-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Dead Days 38",
+                "url": "http://www.mangareader.net/dead-days/38"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Witch Hunt",
+        "slug": "witch-hunt",
+        "url": "http://www.mangareader.net/witch-hunt",
+        "image_url": "http://s1.mangareader.net/cover/witch-hunt/witch-hunt-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Witch Hunt 28",
+                "url": "http://www.mangareader.net/witch-hunt/28"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "All That We Hope to Be",
+        "slug": "all-that-we-hope-to-be",
+        "url": "http://www.mangareader.net/all-that-we-hope-to-be",
+        "image_url": "http://s1.mangareader.net/cover/all-that-we-hope-to-be/all-that-we-hope-to-be-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "All That We Hope to Be 12",
+                "url": "http://www.mangareader.net/all-that-we-hope-to-be/12"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Kuro Kuroku",
+        "slug": "kuro-kuroku",
+        "url": "http://www.mangareader.net/kuro-kuroku",
+        "image_url": "http://s1.mangareader.net/cover/kuro-kuroku/kuro-kuroku-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Kuro Kuroku 5",
+                "url": "http://www.mangareader.net/kuro-kuroku/5"
+            },
+            {
+                "title": "Kuro Kuroku 4",
+                "url": "http://www.mangareader.net/kuro-kuroku/4"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Toriko",
+        "slug": "toriko",
+        "url": "http://www.mangareader.net/349/toriko.html",
+        "image_url": "http://s1.mangareader.net/cover/toriko/toriko-l0.jpg",
+        "new": false,
+        "hot": true,
+        "chapters": [
+            {
+                "title": "Toriko 328",
+                "url": "http://www.mangareader.net/toriko/328"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Ocha Nigosu",
+        "slug": "ocha-nigosu",
+        "url": "http://www.mangareader.net/744/ocha-nigosu.html",
+        "image_url": "http://s1.mangareader.net/cover/ocha-nigosu/ocha-nigosu-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Ocha Nigosu 99",
+                "url": "http://www.mangareader.net/ocha-nigosu/99"
+            },
+            {
+                "title": "Ocha Nigosu 98",
+                "url": "http://www.mangareader.net/ocha-nigosu/98"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Shinozaki-san Ki wo Ota Shika ni!",
+        "slug": "shinozaki-san-ki-wo-ota-shika-ni",
+        "url": "http://www.mangareader.net/shinozaki-san-ki-wo-ota-shika-ni",
+        "image_url": "http://s1.mangareader.net/cover/shinozaki-san-ki-wo-ota-shika-ni/shinozaki-san-ki-wo-ota-shika-ni-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Shinozaki-san Ki wo Ota Shika ni! 23",
+                "url": "http://www.mangareader.net/shinozaki-san-ki-wo-ota-shika-ni/23"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Hayate the Combat Butler",
+        "slug": "hayate-the-combat-butler",
+        "url": "http://www.mangareader.net/203/hayate-the-combat-butler.html",
+        "image_url": "http://s1.mangareader.net/cover/hayate-the-combat-butler/hayate-the-combat-butler-l0.jpg",
+        "new": false,
+        "hot": true,
+        "chapters": [
+            {
+                "title": "Hayate the Combat Butler 497",
+                "url": "http://www.mangareader.net/hayate-the-combat-butler/497"
+            }
+        ],
+        "date": "Today"
+    },
+    {
+        "completed": false,
+        "title": "Bleach",
+        "slug": "bleach",
+        "url": "http://www.mangareader.net/94/bleach.html",
+        "image_url": "http://s1.mangareader.net/cover/bleach/bleach-l0.jpg",
+        "new": false,
+        "hot": true,
+        "chapters": [
+            {
+                "title": "Bleach 631",
+                "url": "http://www.mangareader.net/bleach/631"
+            }
+        ],
+        "date": "Yesterday"
+    },
+    {
+        "completed": false,
+        "title": "One Piece",
+        "slug": "one-piece",
+        "url": "http://www.mangareader.net/103/one-piece.html",
+        "image_url": "http://s1.mangareader.net/cover/one-piece/one-piece-l0.jpg",
+        "new": false,
+        "hot": true,
+        "chapters": [
+            {
+                "title": "One Piece 790",
+                "url": "http://www.mangareader.net/one-piece/790"
+            }
+        ],
+        "date": "Yesterday"
+    },
+    {
+        "completed": false,
+        "title": "Naruto Gaiden: The Seventh Hokage",
+        "slug": "naruto-gaiden-the-seventh-hokage",
+        "url": "http://www.mangareader.net/naruto-gaiden-the-seventh-hokage",
+        "image_url": "http://s1.mangareader.net/cover/naruto-gaiden-the-seventh-hokage/naruto-gaiden-the-seventh-hokage-l0.jpg",
+        "new": false,
+        "hot": true,
+        "chapters": [
+            {
+                "title": "Naruto Gaiden: The Seventh Hokage 8",
+                "url": "http://www.mangareader.net/naruto-gaiden-the-seventh-hokage/8"
+            }
+        ],
+        "date": "Yesterday"
+    },
+    {
+        "completed": false,
+        "title": "Uchuu Kyoudai",
+        "slug": "uchuu-kyoudai",
+        "url": "http://www.mangareader.net/uchuu-kyoudai",
+        "image_url": "http://s1.mangareader.net/cover/uchuu-kyoudai/uchuu-kyoudai-l0.jpg",
+        "new": false,
+        "hot": false,
+        "chapters": [
+            {
+                "title": "Uchuu Kyoudai 253",
+                "url": "http://www.mangareader.net/uchuu-kyoudai/253"
+            }
+        ],
+        "date": "Yesterday"
+    }
+]

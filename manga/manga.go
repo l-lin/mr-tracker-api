@@ -137,10 +137,11 @@ func (m *Manga) Update() {
 	if err != nil {
 		log.Printf("[x] Could not start the transaction. Reason: %s", err.Error())
 	}
-	_, err = tx.Exec("UPDATE mangas SET last_chap = $1 WHERE manga_id = $1 AND user_id = $2", m.LastChap, m.MangaId, m.UserId)
+	_, err = tx.Exec("UPDATE mangas SET last_chap = $1 WHERE manga_id = $2 AND user_id = $3", m.LastChap, m.MangaId, m.UserId)
 	if err != nil {
 		tx.Rollback()
 		log.Printf("[x] Could not update the manga. Reason: %s", err.Error())
+		return
 	}
 
 	if err := tx.Commit(); err != nil {

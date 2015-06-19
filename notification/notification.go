@@ -7,7 +7,7 @@ import (
 )
 
 type Notification struct {
-	NotificationId string `json:"notificationId"`
+	NotificationId int    `json:"notificationId"`
 	MangaId        string `json:"mangaId"`
 	UserId		   string `json:"-"`
 	Title          string `json:"title"`
@@ -45,15 +45,15 @@ func GetList(userId string) []*Notification {
 }
 
 // Get the notification from a given id
-func Get(notificationId string) *Notification {
+func Get(notificationId int, userId string) *Notification {
 	database := db.Connect()
 	defer database.Close()
 
 	row := database.QueryRow(`
 	SELECT notification_id, manga_id, user_id, title, url, image_url
 	FROM notifications
-	WHERE notification_id = $1`,
-		notificationId)
+	WHERE notification_id = $1 AND user_id = $2`,
+		notificationId, userId)
 	return toNotification(row)
 }
 
@@ -67,7 +67,7 @@ func (n *Notification) Save() {
 	}
 	row := tx.QueryRow("INSERT INTO notifications (manga_id, user_id, title, url, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING notification_id",
 		n.MangaId, n.UserId, n.Title, n.Url, n.ImageUrl)
-	var lastId string
+	var lastId int
 	if err := row.Scan(&lastId); err != nil {
 		tx.Rollback()
 		log.Printf("[x] Could not fetch the notification_id of the newly created notification. Reason: %s", err.Error())

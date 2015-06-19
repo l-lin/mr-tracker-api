@@ -8,6 +8,7 @@ import (
 	"github.com/goincremental/negroni-sessions/cookiestore"
 	"os"
 	"log"
+	"github.com/l-lin/mr-tracker-api/feed"
 )
 
 func main() {
@@ -26,7 +27,7 @@ func main() {
 	router.Handle("/signout", signout)
 
 	// Start the cron to fetch the notifications from the RSS feeds
-	//feed.NewCronRss().Start()
+	feed.NewCronRss().Start()
 
 	// Start the app
 	app := negroni.Classic()

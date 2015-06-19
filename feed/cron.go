@@ -10,11 +10,11 @@ import (
 // Cron to fetch all the rss content
 func NewCronRss() *cron.Cron {
 	c := cron.New()
-	c.AddFunc("0 */1 * * * *", fillNotifications)
+	c.AddFunc("0 */1 * * * *", FillNotifications)
 	return c
 }
 
-func fillNotifications() {
+func FillNotifications() {
 	log.Printf("[-] CRON - Starting to fill the table notifications...")
 	feeds := GetFeeds()
 
@@ -45,6 +45,7 @@ func getNotificationsFromFeed(f Feed, m *manga.Manga) []*notification.Notificati
 	if m.MangaId == f.Slug {
 		for _, chap := range f.Chapters {
 			if chap.GetChapNumber() > m.LastChap {
+				log.Printf("[-] CRON - Found match for manga %s. New chapter is %d", m.MangaId, chap.GetChapNumber())
 				n := notification.New()
 				n.UserId = m.UserId
 				n.MangaId = m.MangaId
@@ -53,6 +54,10 @@ func getNotificationsFromFeed(f Feed, m *manga.Manga) []*notification.Notificati
 				n.ImageUrl = f.ImageUrl
 				n.Save()
 				notifications = append(notifications, n)
+
+				// Update the manga last chapter
+				m.LastChap = chap.GetChapNumber()
+				m.Update()
 			}
 		}
 	}

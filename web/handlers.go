@@ -15,6 +15,7 @@ import (
 	"io"
 	"io/ioutil"
 	"strings"
+	"strconv"
 )
 
 // Handler to fetch the list of mangas
@@ -139,18 +140,20 @@ func Notifications(w http.ResponseWriter, r *http.Request) {
 // Handler to fetch a notification
 func Notification(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	notificationId := vars["notificationId"]
+	notificationIdStr := vars["notificationId"]
+	userId := getUserId(r, nil)
+	notificationId, _ := strconv.Atoi(notificationIdStr)
 
-	n := notification.Get(notificationId)
-	if n != nil && n.NotificationId != "" {
-		log.Printf("[-] Found the notification id %s", notificationId)
+	n := notification.Get(notificationId, userId)
+	if n != nil {
+		log.Printf("[-] Found the notification id %d", notificationId)
 		write(w, http.StatusOK, n)
 		return
 	}
 
 	// If we didn't find it, 404
-	log.Printf("[-] Could not find the notification id %s", notificationId)
-	write(w, http.StatusNotFound, JsonErr{Code: http.StatusNotFound, Text: fmt.Sprintf("Notification not Found for notificationId %s", notificationId)})
+	log.Printf("[-] Could not find the notification id %d", notificationId)
+	write(w, http.StatusNotFound, JsonErr{Code: http.StatusNotFound, Text: fmt.Sprintf("Notification not Found for notificationId %d", notificationId)})
 }
 
 // Handler to delete a notification
@@ -158,7 +161,7 @@ func DeleteNotification(w http.ResponseWriter, r *http.Request)  {
 	vars := mux.Vars(r)
 	notificationId := vars["notificationId"]
 	n := notification.New()
-	n.NotificationId = notificationId
+	n.NotificationId, _ = strconv.Atoi(notificationId)
 
 	log.Printf("[-] Deleting notification id %s", notificationId)
 	n.Delete()

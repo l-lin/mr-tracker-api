@@ -26,6 +26,12 @@ var routes = Routes{
 		SaveManga,
 	},
 	Route{
+		"SaveMangas",
+		"POST",
+		"/mangas/import",
+		SaveMangas,
+	},
+	Route{
 		"Manga",
 		"GET",
 		"/mangas/{mangaId}",
@@ -42,6 +48,12 @@ var routes = Routes{
 		"DELETE",
 		"/mangas",
 		DeleteMangas,
+	},
+	Route{
+		"DeleteManga",
+		"DELETE",
+		"/mangas/{mangaId}",
+		DeleteManga,
 	},
 	Route{
 		"Notifications",

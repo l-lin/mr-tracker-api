@@ -88,14 +88,12 @@ func GetNewMangaNotifications() []*notification.Notification {
 	feeds := GetFeeds()
 	for _, f := range feeds {
 		if f.New {
-			for _, c := range f.Chapters {
-				n := notification.New()
-				n.MangaId = f.Slug
-				n.Title = c.Title
-				n.Url = c.Url
-				n.ImageUrl = f.ImageUrl
-				notifications = append(notifications, n)
-			}
+			n := notification.New()
+			n.MangaId = f.Slug
+			n.Title = f.Title
+			n.Url = f.Url
+			n.ImageUrl = f.ImageUrl
+			notifications = append(notifications, n)
 		}
 	}
 

@@ -82,6 +82,33 @@ func SaveManga(w http.ResponseWriter, r *http.Request)  {
 	write(w, http.StatusCreated, m)
 }
 
+// Handler to delete mangas
+func SaveMangas(w http.ResponseWriter, r *http.Request)  {
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	if err != nil {
+		log.Fatalf("[x] Could not read the body. Reason: %s", err.Error())
+	}
+	if err := r.Body.Close(); err != nil {
+		log.Fatalf("[x] Could not close ready the body. Reason: %s", err.Error())
+	}
+	mangaIdsStr := string(body[:])
+	mangaIds := strings.Split(mangaIdsStr, ",")
+
+	userId := getUserId(r, nil)
+
+	log.Printf("[-] Saving manga with mangaIds %s", mangaIdsStr)
+	for _, mangaId := range mangaIds {
+		if !manga.HasManga(userId, mangaId) {
+			m := manga.New()
+			m.UserId = userId
+			m.MangaId = mangaId
+			m.LastChap = 1
+			m.Save()
+		}
+	}
+	write(w, http.StatusCreated, nil)
+}
+
 // Handler to update a manga
 func UpdateManga(w http.ResponseWriter, r *http.Request)  {
 	vars := mux.Vars(r)
@@ -128,6 +155,19 @@ func DeleteMangas(w http.ResponseWriter, r *http.Request)  {
 
 	log.Printf("[-] Deleting manga with mangaIds %s", mangaIdsStr)
 	manga.DeleteMultiple(getUserId(r, nil), mangaIds)
+	write(w, http.StatusNoContent, nil)
+}
+
+// Handler to delete manga
+func DeleteManga(w http.ResponseWriter, r *http.Request)  {
+	vars := mux.Vars(r)
+	mangaId := vars["mangaId"]
+	m := manga.New()
+	m.UserId = getUserId(r, nil)
+	m.MangaId = mangaId
+
+	log.Printf("[-] Deleting manga id %s", mangaId)
+	m.Delete()
 	write(w, http.StatusNoContent, nil)
 }
 
@@ -183,6 +223,11 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		// Save the userId in the session
 		s := sessions.GetSession(r)
 		s.Set(SESSION_USER_ID, userInfo.Id)
+
+		if !manga.Exists(userInfo.Id) {
+			log.Printf("[-] No mangas found for user %s. Copy the default ones...", userInfo.Id)
+			manga.CopyDefaultFor(userInfo.Id)
+		}
 	}
 
 	fmt.Fprintf(w, "You are now authenticated! You can close this tab.")

@@ -12,7 +12,7 @@ type Notification struct {
 	UserId		   string `json:"-"`
 	Title          string `json:"title"`
 	Url            string `json:"url"`
-	ImageUrl	   string `json:"umageUrl"`
+	ImageUrl	   string `json:"imageUrl"`
 }
 
 // Instanciate a new Notification

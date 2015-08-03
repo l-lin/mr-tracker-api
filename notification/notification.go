@@ -30,6 +30,7 @@ func GetList(userId string) []*Notification {
 		SELECT notification_id, manga_id, user_id, title, url, image_url
 		FROM notifications
 		WHERE user_id = $1
+		ORDER BY title ASC
 	`, userId)
 	if err != nil {
 		log.Printf("[x] Error when getting the list of feeds. Reason: %s", err.Error())

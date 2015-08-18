@@ -88,6 +88,25 @@ func GetList() []*User {
 	return users
 }
 
+// Update the last connection date for a given userId
+func UpdateLastConnection(userId string) {
+	database := db.Connect()
+	defer database.Close()
+	tx, err := database.Begin()
+	if err != nil {
+		log.Printf("[x] Could not start the transaction. Reason: %s", err.Error())
+	}
+	_, err = tx.Exec("UPDATE users SET last_connection = $1 WHERE user_id = $2", time.Now(), userId)
+	if err != nil {
+		tx.Rollback()
+		log.Printf("[x] Could not update the last connection date for the user. Reason: %s", err.Error())
+	}
+
+	if err := tx.Commit(); err != nil {
+		log.Printf("[x] Could not commit the transaction. Reason: %s", err.Error())
+	}
+}
+
 // Save the user in the database
 func (u *User) Save() {
 	database := db.Connect()

@@ -84,6 +84,9 @@ func getUserId(r *http.Request, callback func (UserInfo, oauth2.Tokens)) string 
 				callback(userInfo, oauthT)
 			}
 		}
+	} else {
+		log.Printf("[-] Updating last connection date for userId %v", userId)
+		user.UpdateLastConnection(fmt.Sprintf("%v", userId))
 	}
 	return fmt.Sprintf("%v", userId)
 }

@@ -4,10 +4,12 @@ import (
 	"net/http"
 	"encoding/json"
 	"fmt"
+	"os"
 	sessions "github.com/goincremental/negroni-sessions"
 	oauth2 "github.com/goincremental/negroni-oauth2"
 	"github.com/codegangsta/negroni"
 	"log"
+	"github.com/l-lin/mr-tracker-api/user"
 	"github.com/l-lin/mr-tracker-api/manga"
 	"github.com/l-lin/mr-tracker-api/notification"
 	"github.com/l-lin/mr-tracker-api/feed"
@@ -17,6 +19,16 @@ import (
 	"strings"
 	"strconv"
 )
+
+func Users(w http.ResponseWriter, r *http.Request) {
+	userId := getUserId(r, nil)
+	if userId != "" && userId == os.Getenv("ADMIN_ID") {
+		log.Printf("[-] You are the admin. You can access to this info!")
+		write(w, http.StatusOK, user.GetList())
+	} else {
+		write(w, http.StatusForbidden, JsonErr{Code: 403, Text: "Your are not permitted to access to this resource!"})
+	}
+}
 
 // Handler to fetch the list of mangas
 func Mangas(w http.ResponseWriter, r *http.Request) {

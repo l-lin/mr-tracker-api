@@ -14,6 +14,12 @@ type Routes []Route
 // Availables routes
 var routes = Routes{
 	Route{
+		"Users",
+		"GET",
+		"/users",
+		Users,
+	},
+	Route{
 		"Mangas",
 		"GET",
 		"/mangas",

@@ -17,10 +17,10 @@ const oauth2RefreshEndPoint  = "https://www.googleapis.com/oauth2/v3/token"
 
 // The feed
 type User struct {
-	UserId       	string    `json:"-"`
+	UserId       	string    `json:"userId"`
 	RefreshToken 	string    `json:"-"`
-	Email		 	string 	  `json:"-"`
-	LastConnection 	time.Time `json:"-"`
+	Email		 	string 	  `json:"email"`
+	LastConnection 	time.Time `json:"lastConnection"`
 	Picture			string    `json:"picture"`
 }
 

@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	MANGA_FEEDER_URL = "http://mangafeeder.ap01.aws.af.cm/latest.json"
+	MANGA_FEEDER_URL = "http://mangafeeder.herokuapp.com/latest.json"
 	MANGA_READER_URL = "http://www.mangareader.net/"
 )
 
